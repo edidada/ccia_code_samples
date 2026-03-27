@@ -39,166 +39,28 @@ find_package(Threads REQUIRED)
 # 获取所有listings目录下的cpp文件
 file(GLOB LISTING_SOURCES listings/*.cpp)
 
-# 需要跳过的文件列表（不完整代码或需要特殊库）
-set(SKIP_LISTINGS
-    # 这些文件包含不完整的代码片段，缺少main函数或依赖
-    listing_2.1.cpp   # 只有函数定义，没有main
-    listing_2.2.cpp   # 只有函数定义，没有main
-    listing_2.3.cpp   # 只有函数定义，没有main
-    listing_2.4.cpp   # 只有函数定义，没有main
-    listing_2.5.cpp   # 只有函数定义，没有main
-    listing_2.6.cpp   # 只有函数定义，没有main
-    listing_2.7.cpp   # 只有函数定义，没有main
-    listing_2.8.cpp   # 只有函数定义，没有main
-    listing_3.1.cpp   # 只有类定义
-    listing_3.2.cpp   # 只有函数定义
-    listing_3.3.cpp   # 只有函数定义
-    listing_3.4.cpp   # 只有函数定义
-    listing_3.5.cpp   # 只有函数定义
-    listing_3.6.cpp   # 只有函数定义
-    listing_3.7.cpp   # 只有函数定义
-    listing_3.8.cpp   # 只有函数定义
-    listing_3.9.cpp   # 只有函数定义
-    listing_3.10.cpp  # 只有函数定义
-    listing_3.11.cpp  # 只有函数定义
-    listing_3.12.cpp  # 只有类定义
-    listing_3.13.cpp  # 只有类定义
-    listing_4.1.cpp   # 只有函数定义
-    listing_4.2.cpp   # 只有函数定义
-    listing_4.3.cpp   # 只有函数定义
-    listing_4.4.cpp   # 只有函数定义
-    listing_4.5.cpp   # 只有函数定义
-    listing_4.6.cpp   # 只有函数定义
-    listing_4.7.cpp   # 只有函数定义
-    listing_4.8.cpp   # 只有函数定义
-    listing_4.9.cpp   # 只有函数定义
-    listing_4.10.cpp  # 只有函数定义
-    listing_4.11.cpp  # 只有函数定义
-    listing_4.12.cpp  # 只有函数定义
-    listing_4.13.cpp  # 只有函数定义
-    listing_4.14.cpp  # 只有函数定义
-    listing_4.15.cpp  # 只有函数定义
-    listing_4.16.cpp  # 只有函数定义
-    listing_4.17.cpp  # 只有函数定义
-    listing_4.18.cpp  # 只有函数定义
-    listing_4.19.cpp  # 只有函数定义
-    listing_4.20.cpp  # 只有函数定义
-    listing_4.21.cpp  # 只有函数定义
-    listing_4.22.cpp  # 只有函数定义
-    listing_4.23.cpp  # 只有函数定义
-    listing_4.24.cpp  # 只有函数定义
-    listing_4.25.cpp  # 只有函数定义
-    listing_4.26.cpp  # 只有函数定义
-    listing_4.27.cpp  # 只有函数定义
-    listing_5.1.cpp   # 只有函数定义
-    listing_5.2.cpp   # 只有函数定义
-    listing_5.3.cpp   # 只有函数定义
-    listing_5.4.cpp   # 只有函数定义
-    listing_5.5.cpp   # 只有函数定义
-    listing_5.6.cpp   # 只有函数定义
-    listing_5.7.cpp   # 只有函数定义
-    listing_5.8.cpp   # 只有函数定义
-    listing_5.9.cpp   # 只有函数定义
-    listing_5.10.cpp  # 只有函数定义
-    listing_5.11.cpp  # 只有函数定义
-    listing_5.12.cpp  # 只有函数定义
-    listing_5.13.cpp  # 只有函数定义
-    listing_6.1.cpp   # 只有类定义
-    listing_6.2.cpp   # 只有类定义
-    listing_6.3.cpp   # 只有类定义
-    listing_6.4.cpp   # 只有类定义
-    listing_6.5.cpp   # 只有类定义
-    listing_6.6.cpp   # 只有类定义
-    listing_6.7.cpp   # 只有类定义
-    listing_6.8.cpp   # 只有类定义
-    listing_6.9.cpp   # 只有类定义
-    listing_6.10.cpp  # 只有类定义
-    listing_6.11.cpp  # 只有类定义
-    listing_6.12.cpp  # 只有类定义
-    listing_6.13.cpp  # 只有类定义
-    listing_7.1.cpp   # 只有类定义
-    listing_7.2.cpp   # 只有类定义
-    listing_7.3.cpp   # 只有类定义
-    listing_7.4.cpp   # 只有类定义
-    listing_7.5.cpp   # 只有类定义
-    listing_7.6.cpp   # 只有类定义
-    listing_7.7.cpp   # 只有类定义
-    listing_7.8.cpp   # 只有类定义
-    listing_7.9.cpp   # 只有类定义
-    listing_7.10.cpp  # 只有类定义
-    listing_7.11.cpp  # 只有类定义
-    listing_7.12.cpp  # 只有类定义
-    listing_7.13.cpp  # 只有类定义
-    listing_7.14.cpp  # 只有类定义
-    listing_7.15.cpp  # 只有类定义
-    listing_7.16.cpp  # 只有类定义
-    listing_7.17.cpp  # 只有类定义
-    listing_7.18.cpp  # 只有类定义
-    listing_7.19.cpp  # 只有类定义
-    listing_7.20.cpp  # 只有类定义
-    listing_7.21.cpp  # 只有类定义
-    listing_7.22.cpp  # 只有类定义
-    listing_8.1.cpp   # 只有类定义
-    listing_8.2.cpp   # 只有类定义
-    listing_8.3.cpp   # 只有类定义
-    listing_8.4.cpp   # 只有类定义
-    listing_8.5.cpp   # 只有类定义
-    listing_8.6.cpp   # 只有类定义
-    listing_8.7.cpp   # 只有类定义
-    listing_8.8.cpp   # 只有类定义
-    listing_8.9.cpp   # 只有类定义
-    listing_8.10.cpp  # 只有类定义
-    listing_8.11.cpp  # 只有类定义
-    listing_8.12.cpp  # 只有类定义
-    listing_8.13.cpp  # 只有类定义
-    listing_9.1.cpp   # 只有类定义
-    listing_9.2.cpp   # 只有类定义
-    listing_9.3.cpp   # 只有类定义
-    listing_9.4.cpp   # 只有类定义
-    listing_9.5.cpp   # 只有类定义
-    listing_9.6.cpp   # 只有类定义
-    listing_9.7.cpp   # 只有类定义
-    listing_9.8.cpp   # 只有类定义
-    listing_9.9.cpp   # 只有类定义
-    listing_9.10.cpp  # 只有类定义
-    listing_9.11.cpp  # 只有类定义
-    listing_9.12.cpp  # 只有类定义
-    listing_9.13.cpp  # 只有类定义
-    listing_10.1.cpp  # 需要并行算法库(TBB)
-    listing_10.2.cpp  # 需要并行算法库(TBB)
-    listing_10.3.cpp  # 需要并行算法库(TBB)
-    listing_11.1.cpp  # 只有类定义
-    listing_c.1.cpp   # 只有函数定义
-    listing_c.2.cpp   # 只有函数定义
-    listing_c.3.cpp   # 只有函数定义
-    listing_c.4.cpp   # 只有函数定义
-    listing_c.5.cpp   # 只有函数定义
-    listing_c.6.cpp   # 只有函数定义
-    listing_c.7.cpp   # 只有函数定义
-    listing_c.8.cpp   # 只有函数定义
-    listing_c.9.cpp   # 只有函数定义
-    listing_c.10.cpp  # 只有函数定义
-    listing_a.1.cpp   # 只有函数定义
-    listing_a.2.cpp   # 只有函数定义
-    listing_a.3.cpp   # 只有函数定义
-    listing_a.4.cpp   # 只有函数定义
-)
+# 检查是否有main函数，并分类
+set(LISTINGS_WITH_MAIN "")
+set(LISTINGS_WITHOUT_MAIN "")
 
-# 检查是否有可以构建的完整程序
-set(BUILDABLE_LISTINGS "")
 foreach(SOURCE_FILE ${LISTING_SOURCES})
     get_filename_component(FILE_NAME ${SOURCE_FILE} NAME)
-    list(FIND SKIP_LISTINGS ${FILE_NAME} SKIP_INDEX)
-    if(SKIP_INDEX EQUAL -1)
-        list(APPEND BUILDABLE_LISTINGS ${SOURCE_FILE})
+    
+    # 读取文件内容检查是否有main函数
+    file(READ ${SOURCE_FILE} FILE_CONTENT)
+    if(FILE_CONTENT MATCHES "int main\\s*\\(")
+        list(APPEND LISTINGS_WITH_MAIN ${SOURCE_FILE})
     else()
-        message(STATUS "Skipping ${FILE_NAME} - incomplete code snippet")
+        list(APPEND LISTINGS_WITHOUT_MAIN ${FILE_NAME})
     endif()
 endforeach()
 
-# 创建可执行文件
-foreach(SOURCE_FILE ${BUILDABLE_LISTINGS})
-    get_filename_component(EXEC_NAME ${SOURCE_FILE} NAME_WE)
+# 为已有main函数的文件创建可执行目标
+foreach(SOURCE_FILE ${LISTINGS_WITH_MAIN})
+    get_filename_component(FILE_NAME ${SOURCE_FILE} NAME)
+    # 使用完整文件名作为目标名，避免冲突 (如 listing_5.1 和 listing_5.10)
+    string(REPLACE "." "_" EXEC_NAME ${FILE_NAME})
+    string(REPLACE ".cpp" "" EXEC_NAME ${EXEC_NAME})
     add_executable(${EXEC_NAME} ${SOURCE_FILE})
     target_link_libraries(${EXEC_NAME} PRIVATE Threads::Threads)
     set_target_properties(${EXEC_NAME} PROPERTIES
@@ -206,14 +68,47 @@ foreach(SOURCE_FILE ${BUILDABLE_LISTINGS})
     )
 endforeach()
 
+# 为没有main函数的文件，检查是否有对应的mains/*_main.cpp
+set(MAIN_WRAPPERS "")
+file(GLOB MAIN_SOURCES mains/*_main.cpp)
+
+foreach(MAIN_FILE ${MAIN_SOURCES})
+    get_filename_component(MAIN_NAME ${MAIN_FILE} NAME_WE)
+    # 提取对应的listing文件名 (例如: listing_4.4_main -> listing_4.4)
+    string(REGEX REPLACE "_main$" "" LISTING_NAME ${MAIN_NAME})
+    set(LISTING_FILE "${CMAKE_CURRENT_SOURCE_DIR}/listings/${LISTING_NAME}.cpp")
+    
+    if(EXISTS ${LISTING_FILE})
+        add_executable(${MAIN_NAME} ${MAIN_FILE} ${LISTING_FILE})
+        target_include_directories(${MAIN_NAME} PRIVATE 
+            ${CMAKE_CURRENT_SOURCE_DIR}/listings
+            ${CMAKE_CURRENT_SOURCE_DIR}/mains
+        )
+        target_link_libraries(${MAIN_NAME} PRIVATE Threads::Threads)
+        set_target_properties(${MAIN_NAME} PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+        )
+        list(APPEND MAIN_WRAPPERS ${MAIN_NAME})
+    endif()
+endforeach()
+
+# 需要跳过的文件列表（需要特殊库或不完整）
+set(SKIP_LISTINGS
+    listing_10.1.cpp  # 需要并行算法库(TBB)
+    listing_10.2.cpp  # 需要并行算法库(TBB)
+    listing_10.3.cpp  # 需要并行算法库(TBB)
+)
+
 # 统计信息
-list(LENGTH BUILDABLE_LISTINGS BUILDABLE_COUNT)
+list(LENGTH LISTINGS_WITH_MAIN COUNT_WITH_MAIN)
+list(LENGTH LISTINGS_WITHOUT_MAIN COUNT_WITHOUT_MAIN)
+list(LENGTH MAIN_WRAPPERS COUNT_MAIN_WRAPPERS)
 list(LENGTH LISTING_SOURCES TOTAL_COUNT)
-list(LENGTH SKIP_LISTINGS SKIPPED_COUNT)
 
 message(STATUS "C++ Concurrency in Action - Build Configuration")
 message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
 message(STATUS "Total listings: ${TOTAL_COUNT}")
-message(STATUS "Buildable listings: ${BUILDABLE_COUNT}")
-message(STATUS "Skipped listings: ${SKIPPED_COUNT}")
-message(STATUS "Note: Most listings are code snippets without main()")
+message(STATUS "Listings with main(): ${COUNT_WITH_MAIN}")
+message(STATUS "Listings without main(): ${COUNT_WITHOUT_MAIN}")
+message(STATUS "Main wrapper files: ${COUNT_MAIN_WRAPPERS}")
+message(STATUS "Note: Create mains/listing_X.X_main.cpp to add main() for listings without it")
